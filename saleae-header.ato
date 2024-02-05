@@ -2,6 +2,8 @@ import PZ254_2_04_S from "elec/src/PZ254-2-04-S.ato"
 import Pair from "generics/interfaces.ato"
 import TVSDiode from "generics/diodes.ato"
 import Resistor from "generics/resistors.ato"
+import SPI from "generics/interfaces.ato"
+import I2C from "generics/interfaces.ato"
 
 component _protection_resistor from Resistor:
     value = 1kohm +/- 5%
@@ -9,31 +11,29 @@ component _protection_resistor from Resistor:
 
 module SaleaeHeader:
     header = new PZ254_2_04_S
-    channel1 = new Pair
-    channel2 = new Pair
-    channel3 = new Pair
-    channel4 = new Pair
+    ch1 = new Pair
+    ch2 = new Pair
+    ch3 = new Pair
+    ch4 = new Pair
 
     # Connect the grounds together
     signal gnd
-    gnd ~ channel1.gnd
-    gnd ~ channel2.gnd
-    gnd ~ channel3.gnd
-    gnd ~ channel4.gnd
+    gnd ~ ch1.gnd
+    gnd ~ ch2.gnd
+    gnd ~ ch3.gnd
+    gnd ~ ch4.gnd
 
     # protection resistors
-    resistor1 = new _protection_resistor
-    resistor2 = new _protection_resistor
-    resistor3 = new _protection_resistor
-    resistor4 = new _protection_resistor
-
-    #TVS diodes
+    r1 = new _protection_resistor
+    r2 = new _protection_resistor
+    r3 = new _protection_resistor
+    r4 = new _protection_resistor
 
     # connect ios via resistors to the header
-    channel1.io ~ resistor1.1; resistor1.2 ~ header.1
-    channel2.io ~ resistor2.1; resistor2.2 ~ header.3
-    channel3.io ~ resistor3.1; resistor3.2 ~ header.5
-    channel4.io ~ resistor4.1; resistor4.2 ~ header.7
+    ch1.io ~ r1.1; r1.2 ~ header.1
+    ch2.io ~ r2.1; r2.2 ~ header.3
+    ch3.io ~ r3.1; r3.2 ~ header.5
+    ch4.io ~ r4.1; r4.2 ~ header.7
 
     # connect the grounds together
     gnd ~ header.2
@@ -41,3 +41,16 @@ module SaleaeHeader:
     gnd ~ header.6
     gnd ~ header.8
 
+    # SPI
+    spi = new SPI
+    spi.mosi ~ ch1.io
+    spi.miso ~ ch2.io
+    spi.sck ~ ch3.io
+    spi.cs ~ ch4.io
+    spi.gnd ~ gnd
+
+    # I2C
+    i2c = new I2C
+    i2c.scl ~ ch1.io
+    i2c.sda ~ ch2.io
+    i2c.gnd ~ gnd
