@@ -1,0 +1,2 @@
+module SaleaeHeader:
+    signal gnd
