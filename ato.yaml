@@ -1,6 +1,6 @@
 ato-version: ^0.2.0
 builds:
   default:
-    entry: elec/src/saleae-header.ato:SaleaeHeader
+    entry: saleae-header.ato:SaleaeHeader
 dependencies:
 - generics
