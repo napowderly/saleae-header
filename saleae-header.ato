@@ -65,5 +65,5 @@ module SaleaeHeader:
 
     # USB2
     usb2 = new USB2
-    usb2.dp ~ ch3.io
+    usb2.dp ~ ch2.io
     usb2.dm ~ ch3.io
