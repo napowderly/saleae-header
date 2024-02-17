@@ -20,10 +20,10 @@ module SaleaeHeader:
 
     # Connect the grounds together
     signal gnd
+    gnd ~ ch0.gnd
     gnd ~ ch1.gnd
     gnd ~ ch2.gnd
     gnd ~ ch3.gnd
-    gnd ~ ch4.gnd
 
     # protection resistors
     r1 = new _protection_resistor
@@ -32,10 +32,10 @@ module SaleaeHeader:
     r4 = new _protection_resistor
 
     # connect ios via resistors to the header
-    ch1.io ~ r1.1; r1.2 ~ header.1
-    ch2.io ~ r2.1; r2.2 ~ header.3
-    ch3.io ~ r3.1; r3.2 ~ header.5
-    ch4.io ~ r4.1; r4.2 ~ header.7
+    ch0.io ~ r1.1; r1.2 ~ header.1
+    ch1.io ~ r2.1; r2.2 ~ header.3
+    ch2.io ~ r3.1; r3.2 ~ header.5
+    ch3.io ~ r4.1; r4.2 ~ header.7
 
     # connect the grounds together
     gnd ~ header.2
